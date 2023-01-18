@@ -1,0 +1,94 @@
+$density: 0.05em;
+
+html {
+	font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui,
+		helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
+}
+
+html,
+body {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
+
+::selection {
+	background: #000;
+	color: hsl(0deg, 0%, 52%);
+}
+
+@mixin rainbow($colors...) {
+	$output: "";
+	$i: 0;
+
+	@each $color in $colors {
+		$output: $output +
+			", #{$color} #{$density * $i}, #{$color} #{$density * ($i + 1)}";
+		$i: $i + 1;
+	}
+	background: repeating-radial-gradient(circle at -150% -25% unquote($output));
+}
+
+.clock {
+	font-size: 45vmin;
+	line-height: 0.8;
+	position: static;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	font-style: italic;
+	font-weight: 1000;
+	letter-spacing: -0.05em;
+	font-variant-numeric: tabular-nums;
+	overflow: hidden;
+}
+.clock-inner {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: grid;
+	place-content: center;
+	background: repeating-radial-gradient(
+		circle at -150% -25%,
+		#fff,
+		#777 ($density / 2),
+		#fff $density
+	);
+	filter: contrast(2000%);
+}
+.numbers {
+	font-size: 1em;
+	filter: blur($density / 4);
+	transform: rotate(6deg);
+	opacity: 0.46;
+}
+.hour {
+	transform: translatex(0.2em);
+}
+.min {
+	transform: translatex(-0.2em);
+}
+.clock-overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	mix-blend-mode: lighten;
+	pointer-events: none;
+	@include rainbow(
+		#f7b232,
+		#e12626,
+		#733d2c,
+		#2b1d1d,
+		#511c69,
+		#1c73c4,
+		#a0cdfb,
+		#69d6ad,
+		#ffcd04,
+		#fbaaaa
+	);
+}
